@@ -1,4 +1,5 @@
 from presets import styling
+import time, os
 
 # MENU CHOICES
 def chose_1(choice):
@@ -13,10 +14,23 @@ def chose_3(choice):
 def chose_4(choice):
   if choice == 4 or choice.startswith('4') or choice.startswith('q') or choice.startswith ('Q'):
     return True
+def chose_yes(choice):
+  if choice.startswith('y') or choice.startswith('Y'):
+    return True
+  else:
+    return False
+def chose_no(choice):
+  if choice.startswith('n') or choice.startswith('N'):
+    return True
+  else:
+    return False
+    
 def quit_program():
-  styling.prYellow('\n\
-  Exiting program...\
+  styling.prYellow('\
+  Exiting...\n\
   ')
-  styling.prCyan(styling.logo)
+  time.sleep(0.5)
+  os.system('clear')
+  styling.prCyan(styling.logo_exit)
   quit()
 

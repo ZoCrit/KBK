@@ -1,6 +1,4 @@
-import os
-import sys
-import time
+import os, sys, time
 from components import layout, navigation
 from presets import configs, styling
 
@@ -8,7 +6,7 @@ from presets import configs, styling
 def create_config():
   layout.print_configuration_menu()
   choice = input('\n\
-  Make your choice! (1-4): ') or '1'
+  Make your choice! (Default: 1): ') or '1'
   if navigation.chose_1(choice):
     set_classic()
   elif navigation.chose_2(choice):
@@ -19,29 +17,17 @@ def create_config():
     navigation.quit_program()
 
 def delete_config():
-  os.remove(configs.kbk_config)
+  styling.prYellow(styling.divider)
   styling.prYellow('\n\
   Deleting...\n\
   ')
+  os.remove(configs.kbk_config)
   os.system(configs.clear_immediate)
-  time.sleep(1.5)
+  time.sleep(1.2)
   styling.prGreen('\n\
-  Success!')
-  styling.prGreen('\
+  Success!\n\
   The existing KBK configuration file has been deleted.')
-  styling.prGreen('\
-  Going back to the main menu in...')
-  time.sleep(1)
-  styling.prGreen('\
-  3...')
-  time.sleep(1)
-  styling.prGreen('\
-  2...')
-  time.sleep(1)
-  styling.prGreen('\
-  1...')
-  time.sleep(1)
-  start()
+  styling.prGreen(styling.divider)
 
 
 # SET CONFIGS
@@ -53,13 +39,12 @@ def set_classic():
   styling.prYellow('\n\
   Creating config...\n\
   ')
+  time.sleep(1)
   os.system(configs.classic_immediate)
   styling.prGreen('\n\
-  Success! CLASSIC configuration is now active. (F5-F6)\n\
-  Going back to the main menu...')
+  Success! CLASSIC configuration is now active. (F5-F6)')
   styling.prGreen(styling.divider)
-  layout.print_main_menu()
-  main_menu()
+  back_to_menu()
 
 def set_mid():
   config = open(configs.kbk_config, mode = 'w')
@@ -69,13 +54,12 @@ def set_mid():
   styling.prYellow('\n\
   Creating config...\n\
   ')
+  time.sleep(1)
   os.system(configs.mid_immediate)
   styling.prGreen('\n\
-  Success! MID configuration is now active. (F4-F5)\n\
-  Going back to the main menu...')
+  Success! MID configuration is now active. (F4-F5)')
   styling.prGreen(styling.divider)
-  layout.print_main_menu()
-  main_menu()
+  back_to_menu()
 
 def set_left():
   config = open(configs.kbk_config, mode = 'w')
@@ -85,55 +69,27 @@ def set_left():
   styling.prYellow('\n\
   Creating config...\n\
   ')
+  time.sleep(1)
   os.system(configs.left_immediate)
   styling.prGreen('\n\
-  Success! LEFT configuration is now active. (F3-F4)\n\
-  Going back to the main menu...')
+  Success! LEFT configuration is now active. (F3-F4)')
   styling.prGreen(styling.divider)
-  layout.print_main_menu()
-  main_menu()
+  back_to_menu()
 
 # MAIN MENU
 def main_menu():
   choice = input('\n\
-  What do you want to do? (1-4): ')
+  What do you want to do? (Default: 1): ') or '1'
   if navigation.chose_1(choice):
     if check_existing_configs() == True:
       ask_to_delete_config()
     elif check_existing_configs() == False:
       create_config()
-  elif navigation.chose_2(choice):
-    print('\n\
-    Your current configuration is: ')
-    choice = input('\
-    Do you want to change it? [y/N]: ') or 'N'
-    if choice.startswith('y') or choice.startswith('Y'):
-      create_config()
-    else:
-      main_menu()
-  elif navigation.chose_3(choice):
-    print(styling.divider)
-    styling.prYellow('\n\
-    Checking...')
-    if (check_existing_configs() == False):
-      styling.prRed('\n\
-      No existing KBK configuration has been found.')
-      choice = input('\n\
-      Do you want to go back to the main menu? [Y/n (quit)]: ')
-      if choice.startswith('n') or choice.startswith('n'):
-        navigation.quit_program()
-      else:
-        styling.prGreen('\n\
-    Going back to the main menu...')
-        print(styling.divider)
-        layout.print_main_menu()
-        main_menu()
-    elif (check_existing_configs() == True):
-      ask_to_delete_config()
   elif navigation.chose_4(choice):
     navigation.quit_program()
   else:
-    styling.prRed('Invalid input.')
+    styling.prRed('\
+    Invalid input.')
     main_menu()
 
 def start():
@@ -154,8 +110,29 @@ def ask_to_delete_config():
   It has to be deleted in order to create a new one.')
   choice = input('\n\
   Do you want to delete the existing configuration? [y/N]: ') or 'N'
-  if choice.startswith('y') or choice.startswith('Y'):
+  if navigation.chose_yes(choice) == True:
     delete_config()
-    main_menu()
+    ask_new_config()
+  elif navigation.chose_no(choice) == True:
+    back_to_menu()
   else:
-    main_menu()
+    styling.prRed('\
+    Invalid input.')
+
+def ask_new_config():
+  choice = input("\n\
+  \033[96mDo you want to create a new configuration? [Y/n]: \033[00m") or 'Y'
+  if navigation.chose_yes(choice) == True:
+    create_config()
+  elif navigation.chose_no(choice) == True:
+    back_to_menu()
+  else:
+    styling.prRed('\
+    Invalid input.')
+    ask_new_config()
+
+def back_to_menu():
+  styling.prGreen('\n\
+  Going back to main menu in 3..')
+  time.sleep(3)
+  start()
