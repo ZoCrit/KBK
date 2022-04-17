@@ -4,10 +4,13 @@ import os
 active_config = 'Unable to detect any configuration.'
 
 def create_config():
-  choice = input('\
+  choice = input('\n\
+  ### CHOOSE YOUR CONFIGURATION ###\
+  \n\
   1) Classic (F5-F6)\n\
   2) Mid (F4-F5)\n\
   3) Left (F3-F4)\n\
+  \n\
   Which one would you like? ') or '1'
   if choice == 1 or choice.startswith('1') or choice.startswith('c') or choice.startswith('C'):
     set_classic()
@@ -29,7 +32,8 @@ def check_existing_configs():
     return False
 
 def ask_to_delete_config():
-  choice = input('A KBK configuration has been found, do you want to delete it? [y/N]: ') or 'N'
+  choice = input('\n\
+  A KBK configuration has been found, do you want to delete it? [y/N]: ') or 'N'
   if choice.startswith('y') or choice.startswith('Y'):
     delete_config()
     main_menu()
@@ -40,6 +44,8 @@ def delete_config():
   os.remove(configs.kbk_config)
   os.system(configs.clear_immediate)
   print('The existing KBK configuration file has been deleted.')
+  main_menu()
+
 
 def set_classic():
   os.system(configs.classic_immediate)
@@ -47,7 +53,9 @@ def set_classic():
   config.write(configs.classic_persist)
   config.close
   active_config = 'Classic (F5-F6)'
-  prGreen('Success! CLASSIC configuration is now active. (F5-F6)')
+  styling.prGreen('\n\
+  Success! CLASSIC configuration is now active. (F5-F6)')
+  main_menu()
 
 def set_mid():
   os.system(configs.mid_immediate)
@@ -55,7 +63,9 @@ def set_mid():
   config.write(configs.mid_persist)
   config.close
   active_config = 'Mid (F4-F5)'
-  prGreen('Success! MID configuration is now active. (F4-F5)')
+  styling.prGreen('\n\
+  Success! MID configuration is now active. (F4-F5)')
+  main_menu()
 
 def set_left():
   os.system(configs.left_immediate)
@@ -63,11 +73,54 @@ def set_left():
   config.write(configs.left_persist)
   config.close
   active_config = 'Left (F3-F4)'
-  prGreen('Success! CLASSIC configuration is now active. (F3-F4)')
+  styling.prGreen('\n\
+  Success! CLASSIC configuration is now active. (F3-F4)')
+  main_menu()
 
 def main_menu():
-  os.system('clear')
-  styling.prCyan('''
+  choice = input('\n\
+  #### MAIN MENU ####\n\
+  1) Create new configuration\n\
+  2) Edit existing configuration\n\
+  3) Delete existing configuration\n\
+  4) Quit program\n\
+  \n\
+  What do you want to do? (1-4): ')
+  if choice == 1 or choice.startswith('1') or choice.startswith('c') or choice.startswith ('C'):
+    check_existing_config()
+  elif choice == 2 or choice.startswith('2') or choice.startswith('e') or choice.startswith ('E'):
+    print('Your current configuration is: {}'.format(active_config))
+    choice = input('\n\
+    Do you want to change it? [y/N]') or 'N'
+    if choice.startswith('y') or choice.startswith('Y'):
+      create_config()
+    else:
+      main_menu()
+  elif choice == 3 or choice.startswith('3') or choice.startswith('d') or choice.startswith ('D'):
+    if (check_existing_configs() == False):
+      choice = input('\n\
+      No existing configuration found. Do you want to go back to the main menu? [Y/n]')
+      if choice.startswith('n') or choice.startswith('n'):
+        choice = input('\n\
+        Do you want to close the program? [Y/n]')
+        if choice.startswith('n') or choice.startswith('N'):
+          main_menu()
+        else:
+          os.system('clear')
+          quit()
+      else:
+        main_menu()
+    elif (check_existing_config() == True):
+      ask_to_delete_config()
+  elif choice == 4 or choice.startswith('4') or choice.startswith('q') or choice.startswith ('Q'):
+    quit()
+  else:
+    styling.prRed('Invalid input.')
+
+
+
+os.system('clear')
+styling.prCyan('''
     █████   ████ ███████████  █████   ████
    ░░███   ███░ ░░███░░░░░███░░███   ███░ 
     ░███  ███    ░███    ░███ ░███  ███   
@@ -76,43 +129,5 @@ def main_menu():
     ░███ ░░███   ░███    ░███ ░███ ░░███  
     █████ ░░████ ███████████  █████ ░░████
    ░░░░░   ░░░░ ░░░░░░░░░░░  ░░░░░   ░░░░\n''')
-  choice = input('\
-  #### MAIN MENU ####\n\
-  1) Create new configuration\n\
-  2) Edit existing configuration\n\
-  3) Delete existing configuration\n\
-  4) Quit program\n\
-  What do you want to do? (1-4): ')
-  if choice == 1 or choice.startswith('1') or choice.startswith('c') or choice.startswith ('C'):
-    check_existing_config()
-  elif choice == 2 or choice.startswith('2') or choice.startswith('e') or choice.startswith ('E'):
-    print('Your current configuration is: {}'.format(active_config))
-    choice = input('Do you want to change it? [y/N]') or 'N'
-    if choice.startswith('y') or choice.startswith('Y'):
-      create_config()
-    else:
-      main_menu()
-  elif choice == 3 or choice.startswith('3') or choice.startswith('d') or choice.startswith ('D'):
-    if (check_existing_configs() === False):
-      choice = input('No existing configuration found. Do you want to go back to the main menu? [Y/n]')
-      if choice.startswith('n') or choice.startswith('n'):
-        choice = input('Do you want to close the program? [Y/n]')
-        if choice.startswith('n') or choice.startswith('N'):
-          main_menu()
-        else:
-          os.system('clear')
-          quit()
-      else:
-        main_menu()
-    elif (check_existing_config() === True):
-      ask_to_delete_config()
-  elif choice == 4 or choice.startswith('4') or choice.startswith('q') or choice.startswith ('Q'):
-    quit()
-  else:
-    prRed('Invalid input.')
-
-
-
-
 main_menu()
 
