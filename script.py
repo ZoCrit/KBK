@@ -1,76 +1,142 @@
-# print('''
-#  █████   ████ ███████████  █████   ████
-# ░░███   ███░ ░░███░░░░░███░░███   ███░ 
-#  ░███  ███    ░███    ░███ ░███  ███   
-#  ░███████     ░██████████  ░███████    
-#  ░███░░███    ░███░░░░░███ ░███░░███   
-#  ░███ ░░███   ░███    ░███ ░███ ░░███  
-#  █████ ░░████ ███████████  █████ ░░████
-# ░░░░░   ░░░░ ░░░░░░░░░░░  ░░░░░   ░░░░ 
-#                                       ''')
-
 import os
 
-home = os.path.expanduser('~')
-kbk_config_file_path = f'{home}/Library/LaunchAgents/com.local.KeyRemapping.plist'
-# os.chdir(f'{home}/Library/LaunchAgents')
+kbk_config_file_path = '{}/Library/LaunchAgents/com.local.KeyRemapping.plist'.format(os.path.expanduser('~'))
 
-# def create_config():
-#   print('Make a choice from F1 to F12.')
-#   brightness_decrease_choice = input('What would you like your DECREASE brightness key to be? [Default: F3]') or 'F3'
-#   brightness_increase_choice = input('What would you like your DECREASE brightness key to be? [Default: F4]') or 'F4'
-#   # os.chdir(f'{home}/Library/LaunchAgents')
+def prRed(skk): print("\033[91m {}\033[00m" .format(skk))
+def prGreen(skk): print("\033[92m {}\033[00m" .format(skk))
+def prYellow(skk): print("\033[93m {}\033[00m" .format(skk))
+def prLightPurple(skk): print("\033[94m {}\033[00m" .format(skk))
+def prPurple(skk): print("\033[95m {}\033[00m" .format(skk))
+def prCyan(skk): print("\033[96m {}\033[00m" .format(skk))
+def prLightGray(skk): print("\033[97m {}\033[00m" .format(skk))
+def prBlack(skk): print("\033[98m {}\033[00m" .format(skk))
 
-# create_config()
+set_classic_immediate = '''
+        hidutil property --set '{"UserKeyMapping":[
+      {
+        "HIDKeyboardModifierMappingSrc": 0xC000000CF,
+        "HIDKeyboardModifierMappingDst": 0xFF00000009
+      },
+      {
+        "HIDKeyboardModifierMappingSrc": 0x10000009B,
+        "HIDKeyboardModifierMappingDst": 0xFF00000008
+      }
+    ]}'
+    '''
+set_classic_persist_reboot = '''<?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+    <plist version="1.0">
+    <dict>
+        <key>Label</key>
+        <string>com.local.KeyRemapping</string>
+        <key>ProgramArguments</key>
+        <array>
+            <string>/usr/bin/hidutil</string>
+            <string>property</string>
+            <string>--set</string>
+            <string>{"UserKeyMapping":[
+                {
+                  "HIDKeyboardModifierMappingSrc": 0xC000000CF,
+                  "HIDKeyboardModifierMappingDst": 0xFF00000009
+                },
+                {
+                  "HIDKeyboardModifierMappingSrc": 0x10000009B,
+                  "HIDKeyboardModifierMappingDst": 0xFF00000008
+                }
+            ]}</string>
+        </array>
+        <key>RunAtLoad</key>
+        <true/>
+    </dict>
+    </plist>'''
 
-config = open(kbk_config_file_path, mode = 'w')
-config.write('''
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-    <key>Label</key>
-    <string>com.local.KeyRemapping</string>
-    <key>ProgramArguments</key>
-    <array>
-        <string>/usr/bin/hidutil</string>
-        <string>property</string>
-        <string>--set</string>
-        <string>{"UserKeyMapping":[
-            {
-              "HIDKeyboardModifierMappingSrc": 0xFF0100000010,
-              "HIDKeyboardModifierMappingDst": 0xFF00000009
-            },
-            {
-              "HIDKeyboardModifierMappingSrc": 0xC00000221,
-              "HIDKeyboardModifierMappingDst": 0xFF00000008
-            }
-        ]}</string>
-    </array>
-    <key>RunAtLoad</key>
-    <true/>
-</dict>
-</plist>
-''')
-config.close
+def create_config():
+  choice = input('\
+  1) Classic (F5-F6)\n\
+  2) Shifted (F3-F4)\n\
+  Which one would you like? ') or '1'
+  if choice == 1 or choice == '1' or choice.startswith('c') or choice.startswith('C'):
+    os.system(set_classic_immediate)
+    config = open(kbk_config_file_path, mode = 'w')
+    config.write(set_classic_persist_reboot)
+    config.close
+  elif choice == 2 or choice == '2' or choice.startswith('s') or choice.startswith('S'):
+    os.system('''
+        hidutil property --set '{"UserKeyMapping":[
+      {
+        "HIDKeyboardModifierMappingSrc": 0xFF0100000010,
+        "HIDKeyboardModifierMappingDst": 0xFF00000009
+      },
+      {
+        "HIDKeyboardModifierMappingSrc": 0xC00000221,
+        "HIDKeyboardModifierMappingDst": 0xFF00000008
+      }
+    ]}'
+    ''')
+    config = open(kbk_config_file_path, mode = 'w')
+    config.write('''<?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+    <plist version="1.0">
+    <dict>
+        <key>Label</key>
+        <string>com.local.KeyRemapping</string>
+        <key>ProgramArguments</key>
+        <array>
+            <string>/usr/bin/hidutil</string>
+            <string>property</string>
+            <string>--set</string>
+            <string>{"UserKeyMapping":[
+                {
+                  "HIDKeyboardModifierMappingSrc": 0xFF0100000010,
+                  "HIDKeyboardModifierMappingDst": 0xFF00000009
+                },
+                {
+                  "HIDKeyboardModifierMappingSrc": 0xC00000221,
+                  "HIDKeyboardModifierMappingDst": 0xFF00000008
+                }
+            ]}</string>
+        </array>
+        <key>RunAtLoad</key>
+        <true/>
+    </dict>
+    </plist>''')
+    config.close
 
-# def check_existing_config():
-#   if os.path.exists(kbk_config_file_path):
-#     ask_to_delete_config()
-#   else:
-#     default_decrease =
-#     create_config()
-#     print('Moving on')
+def check_existing_config():
+  if os.path.exists(kbk_config_file_path):
+    ask_to_delete_config()
+  else:
+    create_config()
 
-# def ask_to_delete_config():
-#   choice = input('A KBK configuration already exists, do you want to delete it? [y/N]: \n') or 'N'
-#   if choice.startswith('y') or choice.startswith('Y') or len(choice) == 0:
-#     os.remove(kbk_config_file_path)
-#     print('The existing KBK configuration file has been deleted.')
-#   else:
-#     print('Exiting program')
+def ask_to_delete_config():
+  choice = input('A KBK configuration already exists, do you want to delete it? [y/N]: \n') or 'N'
+  if choice.startswith('y') or choice.startswith('Y'):
+    os.remove(kbk_config_file_path)
+    os.system("hidutil property --set '{\"UserKeyMapping\":[]}'")
+    print('The existing KBK configuration file has been deleted.')
+  else:
+    print('Exiting program')
 
-# check_existing_config()
+check_existing_config()
+
+def main_menu():
+  os.system('clear')
+  prCyan('''
+    █████   ████ ███████████  █████   ████
+   ░░███   ███░ ░░███░░░░░███░░███   ███░ 
+    ░███  ███    ░███    ░███ ░███  ███   
+    ░███████     ░██████████  ░███████    
+    ░███░░███    ░███░░░░░███ ░███░░███   
+    ░███ ░░███   ░███    ░███ ░███ ░░███  
+    █████ ░░████ ███████████  █████ ░░████
+   ░░░░░   ░░░░ ░░░░░░░░░░░  ░░░░░   ░░░░\n''')
+  print('\
+  Welcome,\n')
+  print('\
+  Keyboard Brightness Key is a tiny utility program that allows you ')
+
+
+# main_menu()
 
 # ------------------------------------------------------------------------------------
 
@@ -85,11 +151,5 @@ config.close
 #     BOLD = '\033[1m'
 #     UNDERLINE = '\033[4m'
 
-# print(bcolors.WARNING + """
-# n publishing and graphic design, 
-# Lorem ipsum is a placeholder text 
-# commonly used to demonstrate the visual 
-# form of a document or a typeface without 
-# relying on meaningful content.
-# """ + bcolors.ENDC)
 
+# hidutil property --set '{"UserKeyMapping":[]}'
