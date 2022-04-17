@@ -1,98 +1,81 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
-#title           :menu.py
-#description     :This program displays an interactive menu on CLI
-#author          :
-#date            :
-#version         :0.1
-#usage           :python menu.py
-#notes           :
-#python_version  :2.7.6  
-#=======================================================================
 
-# Import the modules needed to run the script.
-import sys, os
-
-# Main definition - constants
-menu_actions  = {}  
-
-# =======================
-#     MENUS FUNCTIONS
-# =======================
-
-# Main menu
-def main_menu():
-    os.system('clear')
-    
-    print ("Welcome,\n")
-    print ("Please choose the menu you want to start:")
-    print ("1. Menu 1")
-    print ("2. Menu 2")
-    print ("\n0. Quit")
-    choice = raw_input(" >>  ")
-    exec_menu(choice)
-
-    return
-
-# Execute menu
-def exec_menu(choice):
-    os.system('clear')
-    ch = choice.lower()
-    if ch == '':
-        menu_actions['main_menu']()
-    else:
-        try:
-            menu_actions[ch]()
-        except KeyError:
-            print ("Invalid selection, please try again.\n")
-            menu_actions['main_menu']()
-    return
-
-# Menu 1
-def menu1():
-    print ("Hello Menu 1 !\n")
-    print ("9. Back")
-    print ("0. Quit")
-    choice = raw_input(" >>  ")
-    exec_menu(choice)
-    return
+import curses
+from curses import panel
 
 
-# Menu 2
-def menu2():
-    print ("Hello Menu 2 !\n")
-    print ("9. Back")
-    print ("0. Quit" )
-    choice = raw_input(" >>  ")
-    exec_menu(choice)
-    return
+class Menu(object):
+    def __init__(self, items, stdscreen):
+        self.window = stdscreen.subwin(0, 0)
+        self.window.keypad(1)
+        self.panel = panel.new_panel(self.window)
+        self.panel.hide()
+        panel.update_panels()
 
-# Back to main menu
-def back():
-    menu_actions['main_menu']()
+        self.position = 0
+        self.items = items
+        self.items.append(("exit", "exit"))
 
-# Exit program
-def exit():
-    sys.exit()
+    def navigate(self, n):
+        self.position += n
+        if self.position < 0:
+            self.position = 0
+        elif self.position >= len(self.items):
+            self.position = len(self.items) - 1
 
-# =======================
-#    MENUS DEFINITIONS
-# =======================
+    def display(self):
+        self.panel.top()
+        self.panel.show()
+        self.window.clear()
 
-# Menu definition
-menu_actions = {
-    'main_menu': main_menu,
-    '1': menu1,
-    '2': menu2,
-    '9': back,
-    '0': exit,
-}
+        while True:
+            self.window.refresh()
+            curses.doupdate()
+            for index, item in enumerate(self.items):
+                if index == self.position:
+                    mode = curses.A_REVERSE
+                else:
+                    mode = curses.A_NORMAL
 
-# =======================
-#      MAIN PROGRAM
-# =======================
+                msg = "%d. %s" % (index, item[0])
+                self.window.addstr(1 + index, 1, msg, mode)
 
-# Main Program
+            key = self.window.getch()
+
+            if key in [curses.KEY_ENTER, ord("\n")]:
+                if self.position == len(self.items) - 1:
+                    break
+                else:
+                    self.items[self.position][1]()
+
+            elif key == curses.KEY_UP:
+                self.navigate(-1)
+
+            elif key == curses.KEY_DOWN:
+                self.navigate(1)
+
+        self.window.clear()
+        self.panel.hide()
+        panel.update_panels()
+        curses.doupdate()
+
+
+class MyApp(object):
+    def __init__(self, stdscreen):
+        self.screen = stdscreen
+        curses.curs_set(0)
+
+        submenu_items = [("beep", curses.beep), ("flash", curses.flash)]
+        submenu = Menu(submenu_items, self.screen)
+
+        main_menu_items = [
+            ("beep", curses.beep),
+            ("flash", curses.flash),
+            ("submenu", submenu.display),
+        ]
+        main_menu = Menu(main_menu_items, self.screen)
+        main_menu.display()
+
+
 if __name__ == "__main__":
-    # Launch main menu
-    main_menu()
+    curses.wrapper(MyApp)
