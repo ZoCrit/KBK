@@ -3,11 +3,6 @@ from text_color_preset import prRed, prGreen, prYellow, prCyan
 
 kbk_config_file_path = '{}/Library/LaunchAgents/com.local.KeyRemapping.plist'.format(os.path.expanduser('~'))
 
-def prRed(skk): print("\033[91m {}\033[00m" .format(skk))
-def prGreen(skk): print("\033[92m {}\033[00m" .format(skk))
-def prYellow(skk): print("\033[93m {}\033[00m" .format(skk))
-def prCyan(skk): print("\033[96m {}\033[00m" .format(skk))
-
 set_classic_immediate = '''
         hidutil property --set '{"UserKeyMapping":[
       {
@@ -133,7 +128,7 @@ def main_menu():
   Keyboard Brightness Key is a tiny utility program that allows you ')
 
 
-# main_menu()
+main_menu()
 
 # ------------------------------------------------------------------------------------
 
