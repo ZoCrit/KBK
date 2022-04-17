@@ -7,11 +7,11 @@ def create_config():
   2) Mid (F4-F5)\n\
   3) Left (F3-F4)\n\
   Which one would you like? ') or '1'
-  if choice.startswith(1) or choice.startswith('1') or choice.startswith('c') or choice.startswith('C'):
+  if choice == 1 or choice.startswith('1') or choice.startswith('c') or choice.startswith('C'):
     set_classic()
-  elif choice.startswith(2) or choice.startswith('2') or choice.startswith('m') or choice.startswith('M'):
+  elif choice == 2 or choice.startswith('2') or choice.startswith('m') or choice.startswith('M'):
     set_mid()
-  elif choice.startswith(3) or choice.startswith('3') or choice.startswith('l') or choice.startswith('L'):
+  elif choice == 3 or choice.startswith('3') or choice.startswith('l') or choice.startswith('L'):
     set_left()
 
 def check_existing_config():
@@ -71,12 +71,12 @@ def main_menu():
   3) Delete existing configuration\n\
   4) Quit program\n\
   What do you want to do? (1-4): ')
-  if choice.startswith(1) or choice.startswith('1') or choice.startswith('c') or choice.startswith ('C'):
+  if choice == 1 or choice.startswith('1') or choice.startswith('c') or choice.startswith ('C'):
     check_existing_config()
-  elif choice.startswith(2) or choice.startswith('2') or choice.startswith('e') or choice.startswith ('E'):
+  elif choice == 2 or choice.startswith('2') or choice.startswith('e') or choice.startswith ('E'):
     print('unfinished')
 
 
 
-# main_menu()
+main_menu()
 
