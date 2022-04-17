@@ -1,6 +1,7 @@
+# from config_presets import kbk_config, classic_immediate, classic_persist, mid_immediate, mid_persist, left_immediate, left_persist, clear_immediate
+# from styling_presets import prRed, prGreen, prYellow, prCyan
+from presets import config_presets, styling_presets
 import os
-from config_presets import kbk_config, classic_immediate, classic_persist, mid_immediate, mid_persist, left_immediate, left_persist, clear_immediate
-from styling_presets import prRed, prGreen, prYellow, prCyan
 
 def create_config():
   choice = input('\
@@ -57,7 +58,5 @@ def main_menu():
   print('\
   Keyboard Brightness Key is a tiny utility program that allows you ')
 
-
 # main_menu()
 
-# hidutil property --set '{"UserKeyMapping":[]}'
