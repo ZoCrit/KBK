@@ -25,7 +25,7 @@ def chose_no(choice):
     return True
   else:
     return False
-    
+
 def quit_program():
   styling.prYellow('\
   Exiting...\n\

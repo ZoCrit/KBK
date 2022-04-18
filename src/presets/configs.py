@@ -1,6 +1,5 @@
 import os
 kbk_config = '{}/Library/LaunchAgents/com.local.KeyRemapping.plist'.format(os.path.expanduser('~'))
-kbk_config_location = '{}/Library/LaunchAgents'.format(os.path.expanduser('~'))
 
 # CLASSIC CONFIG (F5-F6)
 classic_immediate = '''
@@ -124,4 +123,3 @@ left_persist = '''<?xml version="1.0" encoding="UTF-8"?>
 
 # CLEAR CONFIG
 clear_immediate = "hidutil property --set '{\"UserKeyMapping\":[]}'"
-# clear_persist = 
