@@ -5,7 +5,7 @@
 - Python3 is required to run KBK. **(included by default from macOS Monterey 12.3 onwards)**
 - No installation is required.
 ## What is KBK?
-Keyboard Brightness Key is a tiny CLI utility that allows you to remap the Keyboard Brightness Up and Keyboard Brightness Down back to the function row keys, as was the case with pre-M1 MacBooks.
+**Keyboard Brightness Key** is a tiny CLI utility that allows you to remap the Keyboard Brightness Up and Keyboard Brightness Down back to the function row keys, as was the case with pre-M1 MacBooks.
 
 KBK makes use of **_hidutil_** which was released alongside the **_IOHIDEventSystemClient API_** in macOS 10.12 (Sierra). You can find more details in [Apple's Technical Note TN2450](https://developer.apple.com/library/archive/technotes/tn2450/_index.html#//apple_ref/doc/uid/DTS40017618-CH1-KEY_TABLE_USAGES).
 
