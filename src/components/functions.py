@@ -33,12 +33,12 @@ def delete_config():
 
 # SET CONFIGS
 def set_classic():
-  config = open(configs.kbk_config, mode = 'w')
-  config.write(configs.classic_persist)
-  config.close
+  with open(configs.kbk_config, mode = 'w') as conf:
+    conf.write(configs.classic_persist)
+    conf.close
   styling.prYellow(styling.divider)
   styling.prYellow('\n\
-  Creating config...\n\
+  Creating CLASSIC config...\n\
   ')
   time.sleep(1)
   os.system(configs.classic_immediate)
@@ -49,12 +49,12 @@ def set_classic():
   navigation.back_to_menu()
 
 def set_mid():
-  config = open(configs.kbk_config, mode = 'w')
-  config.write(configs.mid_persist)
-  config.close
+  with open(configs.kbk_config, mode = 'w') as conf:
+    conf.write(configs.mid_persist)
+    conf.close
   styling.prYellow(styling.divider)
   styling.prYellow('\n\
-  Creating config...\n\
+  Creating MID config...\n\
   ')
   time.sleep(1)
   os.system(configs.mid_immediate)
@@ -65,12 +65,12 @@ def set_mid():
   navigation.back_to_menu()
 
 def set_left():
-  config = open(configs.kbk_config, mode = 'w')
-  config.write(configs.left_persist)
-  config.close
+  with open(configs.kbk_config, mode = 'w') as conf:
+    conf.write(configs.left_persist)
+    conf.close
   styling.prYellow(styling.divider)
   styling.prYellow('\n\
-  Creating config...\n\
+  Creating LEFT config...\n\
   ')
   time.sleep(1)
   os.system(configs.left_immediate)

@@ -1,5 +1,6 @@
 import os
 kbk_config = '{}/Library/LaunchAgents/com.local.KeyRemapping.plist'.format(os.path.expanduser('~'))
+kbk_config_location = '{}/Library/LaunchAgents'.format(os.path.expanduser('~'))
 
 # CLASSIC CONFIG (F5-F6)
 classic_immediate = '''
