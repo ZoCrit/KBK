@@ -41,17 +41,17 @@ Other configurations have not been added (but will be in the future) as the rema
 **Adding configuration**
 1. Navigate to `/Library/LaunchAgents` (if the LaunchAgents folder doesn't exist, create it)
 2. Create a file called `com.local.KeyRemapping.plist`
-  1. Open it with the text editor of your choice
-  2. Paste the text that corresponds to your configuration of choice ([Presets](#presets-persist---paste-in-file)) | > This will make your configuration persist on reboot
-3. Open the terminal
-  1. Use the command that corresponds to your fongiruation of choice ([Presets](#presets-immediate---run-in-terminal)) | > This will activate it without needing to reboot
+3. Open it with the text editor of your choice
+4. Paste the text that corresponds to your configuration of choice ([Presets (plist)](#presets-plist))
+5. Open the terminal
+6. Use the command that corresponds to your fongiruation of choice ([Presets (terminal)](#presets-terminal))
 
 **Removing configuration**
 1. Navigate to `/Library/LaunchAgents`
 2. Delete `com.local.KeyRemapping.plist` 
 3. Open the terminal and run `$ hidutil property --set '{"UserKeyMapping":[]}'`
 
-### Presets (persist) - Paste in file
+### Presets (plist)
 **Classic configuration** 
 <?xml version="1.0" encoding="UTF-8"?>
     <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
@@ -89,7 +89,7 @@ From the Classic configuration, change:
 - `0xC000000CF` to `0xFF0100000010`
 - `0x10000009B` to `0xC00000221`
     
-### Presets (immediate) - Run in Terminal
+### Presets (terminal)
 **Classic configuration** 
 ```hidutil property --set '{"UserKeyMapping":[
       {
