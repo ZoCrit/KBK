@@ -1,8 +1,9 @@
 # Important notes
 - **_This is only intended to be used on M1/M1 Pro/M1 Max MacBooks_**, on which the Keyboard Brightness function key shortcuts have been removed and native macOS System Preferences do not allow you to remap them. It has not been tested with Intel MacBooks.
 - Using KBK will overwrite the default shortcut of the Function Keys you map it to. (reversible)
-- If you have already manually created your own _hidutil_ custom bindings, using KBK will delete them (**you will receive a warning message** and be asked for confirmation), refer to the Manual Installation section if this is the case.
+- If you have already manually created your own _hidutil_ custom bindings, using KBK will delete them (**you will receive a warning message** and be asked for confirmation), refer to the Manual Configuration section if this is the case.
 - Python3 is required to run KBK. **(included by default from macOS Monterey 12.3 onwards)**
+- No installation is required.
 
 ## What is KBK?
 Keyboard Brightness Key is a tiny CLI utility that allows you to remap the Keyboard Brightness Up and Keyboard Brightness Down back to the function row keys, as was the case with pre-M1 MacBooks.
@@ -14,8 +15,101 @@ You will be offered three mapping choices:
 - **Left**: This maps the keys to **F3 and F4**, next to the Screen Brightness shortcuts. This configuration will overwrite the Launchpad(F3) and Spotlight(F4) shortcuts.
 - **Mid**: This maps the keys to **F4 and F5**, a middle ground between the previous choices. This configuration will overwrite the Spotlight(F4) and Dictation(F5) shortcuts.
 
-Other configurations have not been added (but will be in the future) as the remaining function keys consit of the Screen Brightness, Media Control and Volume shortcuts, which are much more frequently used. If you want to overwrite those, you can refer to the Manual Installation section in the meantime.
+Other configurations have not been added (but will be in the future) as the remaining function keys consit of the Screen Brightness, Media Control and Volume shortcuts, which are much more frequently used. If you want to overwrite those, you can refer to the Manual Configuration section in the meantime.
 
 ## Why KBK?
 - A small QOL need: Unfortunately, the option to remap these keys is still missing from the native System Preferences and I found having to click multiple times through the UI each time I wanted to change the keyboard's brightness quite cumbersome.
 - Minuscule program: If you're only interested in mapping these specific keys, you might dislike installing larger general purpose apps.
+
+## How to use
+### Method 1 - CLI (Recommended)
+1. `$ git clone https://github.com/ZoCrit/KBK.git` (or manually download and extract the ZIP file)
+2. `$ cd YOUR_DOWNLOAD_PATH/KBK/src`
+3. `$ python3 kbk.py`
+4. Start KBK (press Enter, or type 1 and Enter). You'll either be asked to:
+    - Create a new configuration
+    - Delete your existing one (if any is found)
+    - 
+### Method 2 - Bash script
+1. `$ git clone https://github.com/ZoCrit/KBK.git` (or manually download and extract the ZIP file)
+2. `$ cd YOUR_DOWNLOAD_PATH/KBK/src`
+3. `$ sh kbk_bash_YOURCONFIGCHOICE.sh` **or** `$ bash kbk_bash_YOURCONFIGCHOICE.sh`
+  - If you can't open it, use `$ chmod +x kbk_bash_YOURCONFIGCHOICE.sh` then repeat step 3
+  
+
+## Manual Configuration
+**Adding configuration**
+1. Navigate to `/Library/LaunchAgents` (if the LaunchAgents folder doesn't exist, create it)
+2. Create a file called `com.local.KeyRemapping.plist`
+  1. Open it with the text editor of your choice
+  2. Paste the text that corresponds to your configuration of choice (Presets) | > This will make your configuration persist on reboot
+3. Open the terminal
+  1. Use the command that corresponds to your fongiruation of choice (Presets) | > This will activate it without needing to reboot
+
+**Removing configuration**
+1. Navigate to `/Library/LaunchAgents`
+2. Delete `com.local.KeyRemapping.plist` 
+3. Open the terminal and run `$ hidutil property --set '{"UserKeyMapping":[]}'`
+
+### Presets (persist) - Paste in file
+**Classic configuration** 
+<?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+    <plist version="1.0">
+    <dict>
+        <key>Label</key>
+        <string>com.local.KeyRemapping</string>
+        <key>ProgramArguments</key>
+        <array>
+            <string>/usr/bin/hidutil</string>
+            <string>property</string>
+            <string>--set</string>
+            <string>{"UserKeyMapping":[
+                {
+                  "HIDKeyboardModifierMappingSrc": 0xC000000CF,
+                  "HIDKeyboardModifierMappingDst": 0xFF00000009
+                },
+                {
+                  "HIDKeyboardModifierMappingSrc": 0x10000009B,
+                  "HIDKeyboardModifierMappingDst": 0xFF00000008
+                }
+            ]}</string>
+        </array>
+        <key>RunAtLoad</key>
+        <true/>
+    </dict>
+    </plist>
+**Mid configuration**
+From the Classic configuration, change:
+- `0xC000000CF` to `0xC00000221`
+- `0x10000009B` to `0xC000000CF`
+
+**Left configuration**
+From the Classic configuration, change:
+- `0xC000000CF` to `0xFF0100000010`
+- `0x10000009B` to `0xC00000221`
+    
+### Presets (immediate) - Run in Terminal
+**Classic configuration** 
+```hidutil property --set '{"UserKeyMapping":[
+      {
+        "HIDKeyboardModifierMappingSrc": 0xC000000CF,
+        "HIDKeyboardModifierMappingDst": 0xFF00000009
+      },
+      {
+        "HIDKeyboardModifierMappingSrc": 0x10000009B,
+        "HIDKeyboardModifierMappingDst": 0xFF00000008
+      }
+    ]}'
+ ```
+    
+**Mid configuration**
+From the Classic configuration, change:
+- `0xC000000CF` to `0xC00000221`
+- `0x10000009B` to `0xC000000CF`
+
+**Left configuration**
+From the Classic configuration, change:
+- `0xC000000CF` to `0xFF0100000010`
+- `0x10000009B` to `0xC00000221`
+
