@@ -4,6 +4,7 @@ from presets import configs, styling
 
 # ADD OR REMOVE CONFIG
 def create_config():
+  os.system('clear')
   layout.print_configuration_menu()
   choice = input('\n\
   Make your choice! (Default: 1): ') or '1'
