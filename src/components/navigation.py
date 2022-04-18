@@ -1,4 +1,5 @@
 from presets import styling
+from components import functions
 import time, os
 
 # MENU CHOICES
@@ -34,3 +35,14 @@ def quit_program():
   styling.prCyan(styling.logo_exit)
   quit()
 
+def back_to_menu():
+  styling.prGreen('\n\
+  Going back to main menu in 3..')
+  time.sleep(3)
+  functions.start()
+
+def back_to_menu_fast():
+  styling.prGreen('\n\
+  Going back to main menu...')
+  time.sleep(0.5)
+  functions.start()

@@ -21,9 +21,10 @@ def delete_config():
   styling.prYellow('\n\
   Deleting...\n\
   ')
+  time.sleep(1)
   os.remove(configs.kbk_config)
   os.system(configs.clear_immediate)
-  time.sleep(1.2)
+  os.system('clear')
   styling.prGreen('\n\
   Success!\n\
   The existing KBK configuration file has been deleted.')
@@ -41,10 +42,11 @@ def set_classic():
   ')
   time.sleep(1)
   os.system(configs.classic_immediate)
+  os.system('clear')
   styling.prGreen('\n\
   Success! CLASSIC configuration is now active. (F5-F6)')
   styling.prGreen(styling.divider)
-  back_to_menu()
+  navigation.back_to_menu()
 
 def set_mid():
   config = open(configs.kbk_config, mode = 'w')
@@ -56,10 +58,11 @@ def set_mid():
   ')
   time.sleep(1)
   os.system(configs.mid_immediate)
+  os.system('clear')
   styling.prGreen('\n\
   Success! MID configuration is now active. (F4-F5)')
   styling.prGreen(styling.divider)
-  back_to_menu()
+  navigation.back_to_menu()
 
 def set_left():
   config = open(configs.kbk_config, mode = 'w')
@@ -71,10 +74,11 @@ def set_left():
   ')
   time.sleep(1)
   os.system(configs.left_immediate)
+  os.system('clear')
   styling.prGreen('\n\
   Success! LEFT configuration is now active. (F3-F4)')
   styling.prGreen(styling.divider)
-  back_to_menu()
+  navigation.back_to_menu()
 
 # MAIN MENU
 def main_menu():
@@ -114,7 +118,7 @@ def ask_to_delete_config():
     delete_config()
     ask_new_config()
   elif navigation.chose_no(choice) == True:
-    back_to_menu()
+    navigation.back_to_menu_fast()
   else:
     styling.prRed('\
     Invalid input.')
@@ -125,14 +129,8 @@ def ask_new_config():
   if navigation.chose_yes(choice) == True:
     create_config()
   elif navigation.chose_no(choice) == True:
-    back_to_menu()
+    navigation.back_to_menu()
   else:
     styling.prRed('\
     Invalid input.')
     ask_new_config()
-
-def back_to_menu():
-  styling.prGreen('\n\
-  Going back to main menu in 3..')
-  time.sleep(3)
-  start()
