@@ -2,7 +2,30 @@ import os, sys, time
 from components import layout, navigation
 from presets import configs, styling
 
-# ADD OR REMOVE CONFIG
+# STARTING POINT
+def start():
+  os.system('clear')
+  styling.prCyan(styling.logo)
+  layout.print_main_menu()
+  main_menu()
+
+  # MAIN MENU
+def main_menu():
+  choice = input('\n\
+  What do you want to do? (Default: 1): ') or '1'
+  if navigation.chose_1(choice):
+    if check_existing_configs() == True:
+      ask_to_delete_config()
+    elif check_existing_configs() == False:
+      create_config()
+  elif navigation.chose_4(choice):
+    navigation.quit_program()
+  else:
+    styling.prRed('\
+    Invalid input.')
+    main_menu()
+
+# ADD/REMOVE CONFIG
 def create_config():
   os.system('clear')
   layout.print_configuration_menu()
@@ -81,28 +104,7 @@ def set_left():
   styling.prGreen(styling.divider)
   navigation.back_to_menu()
 
-# MAIN MENU
-def main_menu():
-  choice = input('\n\
-  What do you want to do? (Default: 1): ') or '1'
-  if navigation.chose_1(choice):
-    if check_existing_configs() == True:
-      ask_to_delete_config()
-    elif check_existing_configs() == False:
-      create_config()
-  elif navigation.chose_4(choice):
-    navigation.quit_program()
-  else:
-    styling.prRed('\
-    Invalid input.')
-    main_menu()
-
-def start():
-  os.system('clear')
-  styling.prCyan(styling.logo)
-  layout.print_main_menu()
-  main_menu()
-# CHECKS AND ASKS
+# CHECKS AND PERMISSIONS
 def check_existing_configs():
   if os.path.exists(configs.kbk_config):
     return True

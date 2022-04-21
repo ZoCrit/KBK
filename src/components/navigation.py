@@ -2,7 +2,7 @@ from presets import styling
 from components import functions
 import time, os
 
-# MENU CHOICES
+# MENU NUMBERED CHOICES
 def chose_1(choice):
   if choice == 1 or choice.startswith('1') or choice.startswith('c') or choice.startswith ('C'):
     return True
@@ -15,6 +15,8 @@ def chose_3(choice):
 def chose_4(choice):
   if choice == 4 or choice.startswith('4') or choice.startswith('q') or choice.startswith ('Q'):
     return True
+
+# MENU BOOL CHOICES
 def chose_yes(choice):
   if choice.startswith('y') or choice.startswith('Y'):
     return True
@@ -26,15 +28,7 @@ def chose_no(choice):
   else:
     return False
 
-def quit_program():
-  styling.prYellow('\
-  Exiting...\n\
-  ')
-  time.sleep(0.5)
-  os.system('clear')
-  styling.prCyan(styling.logo_exit)
-  quit()
-
+# RESETS AND QUIT
 def back_to_menu():
   styling.prGreen('\n\
   Going back to main menu in 3..')
@@ -46,3 +40,12 @@ def back_to_menu_fast():
   Going back to main menu...')
   time.sleep(0.5)
   functions.start()
+
+  def quit_program():
+  styling.prYellow('\
+  Exiting...\n\
+  ')
+  time.sleep(0.5)
+  os.system('clear')
+  styling.prCyan(styling.logo_exit)
+  quit()
