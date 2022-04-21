@@ -4,13 +4,8 @@
 - If you have already manually created your own _hidutil_ custom bindings, using KBK will delete them (**you will receive a warning message** and be asked for confirmation). If you still want to use this, refer to the [Manual Configuration](#manual-configuration) section.
 - Python3 is required to run KBK. **(included by default from macOS Monterey 12.3 onwards)**
 - No installation is required.
-
-## Screenshots
-<img src="https://github.com/ZoCrit/KBK/blob/main/src/extras/screenshots/main_menu.png?raw=true" style=" width:30% "  >
-
-
 ## What is KBK?
-Keyboard Brightness Key is a tiny CLI utility that allows you to remap the Keyboard Brightness Up and Keyboard Brightness Down back to the function row keys, as was the case with pre-M1 MacBooks.
+**Keyboard Brightness Key** is a tiny CLI utility that allows you to remap the Keyboard Brightness Up and Keyboard Brightness Down back to the function row keys, as was the case with pre-M1 MacBooks.
 
 KBK makes use of **_hidutil_** which was released alongside the **_IOHIDEventSystemClient API_** in macOS 10.12 (Sierra). You can find more details in [Apple's Technical Note TN2450](https://developer.apple.com/library/archive/technotes/tn2450/_index.html#//apple_ref/doc/uid/DTS40017618-CH1-KEY_TABLE_USAGES).
 
@@ -33,7 +28,7 @@ Other configurations have not been added (but will be in the future) as the rema
 4. Start KBK (press Enter, or type 1 and Enter). You'll either be asked to:
     - Create a new configuration
     - Delete your existing one (if any is detected)
-    - 
+      - [Screenshots](#screenshots)
 ### Method 2 - Bash script
 1. `$ git clone https://github.com/ZoCrit/KBK.git` (or manually download and extract the ZIP file)
 2. `$ cd YOUR_DOWNLOAD_PATH/KBK/src`
@@ -116,4 +111,6 @@ From the Classic configuration, change:
 From the Classic configuration, change:
 - `0xC000000CF` to `0xFF0100000010`
 - `0x10000009B` to `0xC00000221`
+## Screenshots
+<img src="https://github.com/ZoCrit/KBK/blob/main/src/extras/screenshots/main.png?raw=true" style=" width:30% "><img src="https://github.com/ZoCrit/KBK/blob/main/src/extras/screenshots/config_menu.png?raw=true" style=" width:30% "><img src="https://github.com/ZoCrit/KBK/blob/main/src/extras/screenshots/config_success.png?raw=true" style=" width:30% "><img src="https://github.com/ZoCrit/KBK/blob/main/src/extras/screenshots/delete_dialogue.png?raw=true" style=" width:30% ">
 
