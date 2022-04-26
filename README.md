@@ -79,19 +79,20 @@ Other configurations have not been added (but will be in the future) as the rema
         <true/>
     </dict>
     </plist>
-**Mid configuration**
+**Mid configuration**  
 From the Classic configuration, change:
 - `0xC000000CF` to `0xC00000221`
 - `0x10000009B` to `0xC000000CF`
 
-**Left configuration**
+**Left configuration**  
 From the Classic configuration, change:
 - `0xC000000CF` to `0xFF0100000010`
 - `0x10000009B` to `0xC00000221`
     
 ### Presets (terminal)
 **Classic configuration** 
-```hidutil property --set '{"UserKeyMapping":[
+```
+hidutil property --set '{"UserKeyMapping":[
       {
         "HIDKeyboardModifierMappingSrc": 0xC000000CF,
         "HIDKeyboardModifierMappingDst": 0xFF00000009
@@ -103,12 +104,12 @@ From the Classic configuration, change:
     ]}'
  ```
     
-**Mid configuration**
+**Mid configuration**    
 From the Classic configuration, change:
 - `0xC000000CF` to `0xC00000221`
 - `0x10000009B` to `0xC000000CF`
 
-**Left configuration**
+**Left configuration**  
 From the Classic configuration, change:
 - `0xC000000CF` to `0xFF0100000010`
 - `0x10000009B` to `0xC00000221`
