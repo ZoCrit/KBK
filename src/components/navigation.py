@@ -41,7 +41,7 @@ def back_to_menu_fast():
   time.sleep(0.5)
   functions.start()
 
-  def quit_program():
+def quit_program():
   styling.prYellow('\
   Exiting...\n\
   ')
