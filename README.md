@@ -19,6 +19,7 @@ Other configurations have not been added (but will be in the future) as the rema
 ## Why KBK?
 - A small QOL need: Unfortunately, the option to remap these keys is still missing from the native System Preferences and I found having to click multiple times through the UI each time I wanted to change the keyboard's brightness quite cumbersome.
 - Minuscule program: If you're only interested in mapping these specific keys, you might dislike installing larger general purpose apps.
+- _Needed an excuse to learn a little about Pythons syntax..._
 
 ## How to use
 ### Method 1 - CLI (Recommended)
@@ -78,19 +79,20 @@ Other configurations have not been added (but will be in the future) as the rema
         <true/>
     </dict>
     </plist>
-**Mid configuration**
+**Mid configuration**  
 From the Classic configuration, change:
 - `0xC000000CF` to `0xC00000221`
 - `0x10000009B` to `0xC000000CF`
 
-**Left configuration**
+**Left configuration**  
 From the Classic configuration, change:
 - `0xC000000CF` to `0xFF0100000010`
 - `0x10000009B` to `0xC00000221`
     
 ### Presets (terminal)
 **Classic configuration** 
-```hidutil property --set '{"UserKeyMapping":[
+```
+hidutil property --set '{"UserKeyMapping":[
       {
         "HIDKeyboardModifierMappingSrc": 0xC000000CF,
         "HIDKeyboardModifierMappingDst": 0xFF00000009
@@ -102,12 +104,12 @@ From the Classic configuration, change:
     ]}'
  ```
     
-**Mid configuration**
+**Mid configuration**    
 From the Classic configuration, change:
 - `0xC000000CF` to `0xC00000221`
 - `0x10000009B` to `0xC000000CF`
 
-**Left configuration**
+**Left configuration**  
 From the Classic configuration, change:
 - `0xC000000CF` to `0xFF0100000010`
 - `0x10000009B` to `0xC00000221`
