@@ -19,7 +19,7 @@ Other configurations have not been added (but will be in the future) as the rema
 ## Why KBK?
 - A small QOL need: Unfortunately, the option to remap these keys is still missing from the native System Preferences and I found having to click multiple times through the UI each time I wanted to change the keyboard's brightness quite cumbersome.
 - Minuscule program: If you're only interested in mapping these specific keys, you might dislike installing larger general purpose apps.
-- _Needed an excuse to learn a little about Pythons syntax..._
+- _Friends that aren't comfortable with bash scripts needed this..._ (a.k.a the only real reason)
 
 ## How to use
 ### Method 1 - CLI (Recommended)
